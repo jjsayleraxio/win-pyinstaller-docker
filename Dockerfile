@@ -84,7 +84,8 @@ RUN mkdir -p /wine/drive_c/tmp
 
 RUN pip install pyinstaller==$PYINSTALLER_VERSION
 
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN cd / \
+    && wget https://raw.githubusercontent.com/jjsayleraxio/win-pyinstaller-docker/master/entrypoint.sh \
+    && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
