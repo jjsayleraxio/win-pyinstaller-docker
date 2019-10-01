@@ -26,7 +26,6 @@ RUN set -x \
     && mv winetricks /usr/local/bin \
     # install python in wine, using the msi packages to install, extracting
     # the files directly, since installing isn't running correctly.
-    && set -x \
     && winetricks win7 \
     && for msifile in `echo core dev exe lib path pip tcltk tools`; do \
         wget -nv "https://www.python.org/ftp/python/3.7.3/amd64/${msifile}.msi"; \
@@ -46,7 +45,6 @@ RUN set -x \
     && wine python.exe Scripts/pip.exe install pywin32 \
     && rm -rf /tmp/.wine-* \
     # install Microsoft Visual C++ Redistributable for Visual Studio 2017 dll files
-    && set -x \
     && W_TMP="/wine/drive_c/windows/temp/_$0" \
     && rm -f "$W_TMP"/* \
     && wget -P "$W_TMP" https://download.visualstudio.microsoft.com/download/pr/11100230/15ccb3f02745c7b206ad10373cbca89b/VC_redist.x64.exe \
