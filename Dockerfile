@@ -3,6 +3,8 @@ FROM ubuntu:18.04
 # original from https://github.com/cdrx/docker-pyinstaller
 
 ENV DEBIAN_FRONTEND noninteractive
+
+# wine settings
 ENV WINEARCH win64
 ENV WINEDEBUG fixme-all
 ENV WINEPREFIX /wine
@@ -10,7 +12,7 @@ ENV WINEPREFIX /wine
 RUN set -x \
     && dpkg --add-architecture i386 \
     && apt-get update -qy \
-    && apt-get install --no-install-recommends -qfy apt-transport-https software-properties-common wget gpg-agent rename \
+    && apt-get install --no-install-recommends -qfy apt-transport-https software-properties-common wget gpg-agent rename zip \
     && wget -nv https://dl.winehq.org/wine-builds/winehq.key \
     # used to suppress apt-key warning message
     && APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=1 \
@@ -54,12 +56,7 @@ RUN set -x \
     && cd "$W_TMP" \
     && rename 's/_/\-/g' *.dll \
     && cp "$W_TMP"/*.dll "/wine/drive_c/windows/system32"/ \
-    # put the src folder inside wine
+    # link the src folder inside the wine folder
     && mkdir /src/ && ln -s /src /wine/drive_c/src \
     && mkdir -p /wine/drive_c/tmp \
     && pip install pyinstaller==3.5
-    
-VOLUME /src/
-WORKDIR /wine/drive_c/src/
-
-ENTRYPOINT []
