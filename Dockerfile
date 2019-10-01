@@ -45,7 +45,7 @@ RUN set -x \
     && rm -rf /tmp/.wine-* \
     # install Microsoft Visual C++ Redistributable for Visual Studio 2017 dll files
     && set -x \
-    && W_TMP="/wine/drive_c/windows/temp/_$0"
+    && W_TMP="/wine/drive_c/windows/temp/_$0" \
     && rm -f "$W_TMP"/* \
     && wget -P "$W_TMP" https://download.visualstudio.microsoft.com/download/pr/11100230/15ccb3f02745c7b206ad10373cbca89b/VC_redist.x64.exe \
     && cabextract -q --directory="$W_TMP" "$W_TMP"/VC_redist.x64.exe \
